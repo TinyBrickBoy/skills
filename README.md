@@ -1,10 +1,10 @@
 # skills
 
-A collection of [Claude Code skills](https://code.claude.com/docs) for writing high-quality Java and Minecraft plugin/mod code. These skills guide Claude to produce clean, idiomatic, production-ready Java instead of generic "AI slop".
+A collection of [Claude Code skills](https://code.claude.com/docs) for writing high-quality Java, Kotlin, and Minecraft plugin/mod code. These skills guide Claude to produce clean, idiomatic, production-ready code instead of generic "AI slop".
 
 ## Skills
 
-All skills live in the `clean-java/` folder:
+### Java skills (in `clean-java/`)
 
 | Skill | Purpose |
 |-------|---------|
@@ -14,6 +14,12 @@ All skills live in the `clean-java/` folder:
 | `minecraft-mod` | Fabric/NeoForge/Forge mods — side-safety, registry timing, Mixins |
 
 > The Minecraft skills build on `clean-java`. Claude applies all clean-java rules automatically when a Minecraft skill is active.
+
+### Kotlin skills (in `kotlin/`)
+
+| Skill | Purpose |
+|-------|---------|
+| `kotlin` | Modern, idiomatic Kotlin 2.x — null safety, coroutines, sealed types, no Java-isms |
 
 ---
 
@@ -87,10 +93,21 @@ Skills activate automatically based on what you're editing. You don't need to as
 | A Paper/Spigot/Bukkit plugin | `minecraft-paper-plugin` + `clean-java` |
 | A Folia plugin | `minecraft-folia-plugin` + `minecraft-paper-plugin` + `clean-java` |
 | A Fabric/NeoForge/Forge mod | `minecraft-mod` + `clean-java` |
+| Any `.kt` or `.kts` file | `kotlin` |
+| Mentions of Kotlin, KMP, coroutines, Ktor, Exposed | `kotlin` |
 
 ---
 
 ## What each skill enforces
+
+### `kotlin`
+- `val` over `var`, read-only collections by default
+- Null safety enforced by the type system — no `!!`, no `Optional`
+- `data class` for value objects, `sealed interface` + exhaustive `when` for hierarchies
+- Extension functions instead of `Utils` / `Helper` objects
+- Coroutines with structured concurrency — no `GlobalScope`, no raw threads
+- Value classes for domain primitives (IDs, amounts, units)
+- Kotest + MockK for tests, Gradle Kotlin DSL for builds
 
 ### `clean-java`
 - Records for data carriers, sealed types + exhaustive switch for hierarchies
@@ -127,30 +144,37 @@ Skills activate automatically based on what you're editing. You don't need to as
 
 ```
 skills/
-└── clean-java/               ← skill package (add this path to Claude Code)
-    ├── SKILL.md              ← clean-java skill definition
-    ├── references/           ← clean-java reference docs
-    │   ├── anti-patterns.md
-    │   ├── concurrency-and-errors.md
-    │   ├── modern-java.md
-    │   └── testing-and-tooling.md
-    ├── minecraft-paper-plugin/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── commands-events-text.md
-    │       ├── structure-and-build.md
-    │       └── threading.md
-    ├── minecraft-mod/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── best-practices.md
-    │       ├── loaders.md
-    │       └── mixins-and-mappings.md
-    └── minecraft-folia-plugin/
-        ├── SKILL.md
-        └── references/
-            ├── schedulers.md
-            └── thread-safety-and-migration.md
+├── clean-java/               ← Java skill package
+│   ├── SKILL.md              ← clean-java skill definition
+│   ├── references/
+│   │   ├── anti-patterns.md
+│   │   ├── concurrency-and-errors.md
+│   │   ├── modern-java.md
+│   │   └── testing-and-tooling.md
+│   ├── minecraft-paper-plugin/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── commands-events-text.md
+│   │       ├── structure-and-build.md
+│   │       └── threading.md
+│   ├── minecraft-mod/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── best-practices.md
+│   │       ├── loaders.md
+│   │       └── mixins-and-mappings.md
+│   └── minecraft-folia-plugin/
+│       ├── SKILL.md
+│       └── references/
+│           ├── schedulers.md
+│           └── thread-safety-and-migration.md
+└── kotlin/                   ← Kotlin skill package
+    ├── SKILL.md              ← kotlin skill definition
+    └── references/
+        ├── idioms.md
+        ├── anti-patterns.md
+        ├── coroutines.md
+        └── testing-and-tooling.md
 ```
 
 ---
